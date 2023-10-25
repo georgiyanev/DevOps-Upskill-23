@@ -1,1 +1,1 @@
-# DevOps-Upskill-23
+# DevOps-Upskill-23 - the main project
