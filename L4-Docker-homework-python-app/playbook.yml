@@ -30,8 +30,8 @@
 
     - name: Install Python libs
       pip:
-        chdir: "{{ code_directory }}/requirements.txt"
-        requirements: "/Ansible/requirements.txt"
+        chdir: "{{ code_directory }}/requirements-ansible.txt"
+        requirements: "requirements-ansible.txt"
         state: present
         virtualenv_command: "pyenv"
 
