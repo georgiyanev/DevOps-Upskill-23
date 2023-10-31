@@ -1,48 +1,36 @@
 ---
-- name: Build, Push, and Run Python Docker Image
+- name: Build, push, and run Python app Docker image
   hosts: localhost
-  gather_facts: no
-<<<<<<< HEAD
-  become: no
-=======
-  become: yes
-  become_method: sudo
-  become_user: root
->>>>>>> 66ac634 (WIP: Ansible error permissions fixed)
-
+  gather_facts: false
   vars:
-    image_name: "georgiyanev/DevOps-Upskill-23"
-    image_tag: "v0.1"
-    listen_port: "5001"
-    code_directory: "/code"
-    app_host: "0.0.0.0"
+    python_app_dir: /app
+    docker_registry: gyanev84
+    docker_image_name: python-app
+    docker_image_tag: v.0.2
 
   tasks:
-    - name: Create code dir
-      file:
-        dest: "{{ code_directory }}"
-        state: directory
+    - name: Ensure Python Application Directory Exists
+      stat:
+        path: "{{ python_app_dir }}"
+      delegate_to: localhost
+      ignore_errors: yes
+      changed_when: false
+      check_mode: no
+      register: python_app_dir
 
-    - name: Get latest app from GitHub
-      git:
-        repo: "git@github.com:{{ image_name }}"
-        version: main
-        dest: "{{ code_directory }}"
-        clone: yes
-        recursive: yes
-        force: yes
-        accept_hostkey: yes
-        key_file: "/home/gyanev/.ssh/id_rsa"
-
-    - name: Install Python libs
-      pip:
-        chdir: "{{ code_directory }}"
-        requirements: "requirements.txt"
-        state: present
-        virtualenv_command: "pyenv"
-
-    - name: Start the Flask app
-      shell: "flask run -h {{ app_host }} -p {{ listen_port: }}"
+    - name: Build Docker Image
+      command: >
+        docker build -t {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }} {{ python_app_dir }}
       args:
-        chdir: "{{ code_directory }}/app"
+        chdir: "{{ python_app_dir }}"
+      become: yes
 
+    - name: Push Docker Image to Registry
+      command: >
+        docker push {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
+      become: yes
+
+    - name: Run Docker Container
+      command: >
+        docker run -d --name {{ docker_image_name }} -p 8080:80 {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
+      become: yes
