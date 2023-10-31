@@ -14,6 +14,8 @@
         name: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
         dest: "/app"
         version: "feat--ansible-homework"
+        username: georgiyanev
+        password: password
       register: result
 
     - name: Build Docker Image
