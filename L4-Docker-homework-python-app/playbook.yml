@@ -15,7 +15,7 @@
         dest: "/app"
         version: "feat--ansible-homework"
         username: georgiyanev
-        password: password
+        access_token: Ansible
       register: result
 
     - name: Build Docker Image
