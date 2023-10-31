@@ -11,9 +11,9 @@
   tasks:
     - name: Clone Git Repository
       community.general.github_repo:
-        repo: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
+        name: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
         dest: "/app"
-        version: "main"
+        version: "feat--ansible-homework"
       register: result
 
     - name: Build Docker Image
