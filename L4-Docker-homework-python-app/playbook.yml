@@ -11,9 +11,9 @@
   tasks:
     - name: Checkout Git Repository
       ansible.builtin.git:
-        repo: 'https://github.com/georgiyanev/DevOps-Upskill-23.git'
-        dest: /srv/checkout
-        version: docker_image_tag
+        repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
+        dest: python_app_dir
+
 
     - name: Build Docker Image
       command: >
