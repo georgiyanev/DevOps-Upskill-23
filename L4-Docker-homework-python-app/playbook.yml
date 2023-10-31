@@ -9,10 +9,10 @@
     python_app_dir: "/app"
   
   tasks:
-    - name: Checkout Git Repository
-      ansible.builtin.git:
-        repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
-        dest: python_app_dir
+    # - name: Checkout Git Repository
+    #   ansible.builtin.git:
+    #     repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
+    #     dest: python_app_dir
 
     - name: Build image and with build args
       community.docker.docker_image:
