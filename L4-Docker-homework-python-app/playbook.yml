@@ -21,7 +21,7 @@
           path: /app/docker-image
           args:
             log_volume: /var/log/docker_image_name
-            listen_port: 8080
+            listen_port: 5001
         source: build
 
     - name: Tag and push to local registry
