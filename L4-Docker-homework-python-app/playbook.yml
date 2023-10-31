@@ -10,15 +10,11 @@
   
   tasks:
     - name: Clone Git Repository
-      community.general.git_config:
+      community.general.github_repo:
         repo: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
         dest: "/app"
         version: "main"
-      register: git_checkout_result
-
-    - name: Debug Git Clone Result
-      debug:
-        var: git_checkout_result
+      register: result
 
     - name: Build Docker Image
       command: >
