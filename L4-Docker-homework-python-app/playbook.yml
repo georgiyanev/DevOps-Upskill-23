@@ -1,36 +1,29 @@
 ---
-- name: Build, push, and run Python app Docker image
+- name: Checkout Git Repository and Build Docker Image
   hosts: localhost
-  gather_facts: false
+
   vars:
-    python_app_dir: /app
-    docker_registry: gyanev84
-    docker_image_name: python-app
-    docker_image_tag: v.0.2
+    docker_registry: "gyanev84"
+    docker_image_name: "python-app"
+    docker_image_tag: "v.0.2"
+    python_app_dir: "/app"
 
   tasks:
-    - name: Ensure Python Application Directory Exists
-      stat:
-        path: "{{ python_app_dir }}"
-      delegate_to: localhost
-      ignore_errors: yes
-      changed_when: false
-      check_mode: no
-      register: python_app_dir
+    - name: Clone Git Repository
+      community.general.git:
+        repo: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
+        dest: "/app"
+        version: "main"
+      register: git_checkout_result
+
+    - name: Debug Git Clone Result
+      debug:
+        var: git_checkout_result
 
     - name: Build Docker Image
       command: >
-        docker build -t {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }} {{ python_app_dir }}
+        docker build -t {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }} .
       args:
         chdir: "{{ python_app_dir }}/docker-image"
       become: yes
-
-    - name: Push Docker Image to Registry
-      command: >
-        docker push {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
-      become: yes
-
-    - name: Run Docker Container
-      command: >
-        docker run -d --name {{ docker_image_name }} -p 8080:80 {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
-      become: yes
+      when: git_checkout_result.changed
