@@ -15,7 +15,6 @@
         dest: "{{ python_app_dir }}"
         key_file: /home/gyanev/.ssh/id_rsa
         accept_hostkey: yes
-        version: "{{ docker_image_tag }}"
       environment:
         GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
