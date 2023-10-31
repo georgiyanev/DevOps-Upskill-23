@@ -2,7 +2,7 @@
 - name: Build, Push, and Run Python Docker Image
   hosts: localhost
   gather_facts: no
-  become: no
+  become: yes
 
   vars:
     image_name: "georgiyanev/DevOps-Upskill-23"
@@ -30,13 +30,12 @@
 
     - name: Install Python libs
       pip:
-        chdir: "{{ code_directory }}"
-        requirements: "requirements.txt"
+        chdir: "{{ code_directory }}/requirements-ansible.txt"
+        requirements: "requirements-ansible.txt"
         state: present
         virtualenv_command: "pyenv"
 
     - name: Start the Flask app
-      shell: "flask run -h {{ app_host }} -p {{ listen_port: }}"
+      shell: "flask run -h {{ app_host }} -p {{ listen_port }} &"
       args:
-        chdir: "{{ code_directory }}/app"
-
+        chdir: "{{ code_directory }}/L4-Docker-homework-python-app/app"
