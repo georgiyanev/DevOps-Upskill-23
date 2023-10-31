@@ -25,15 +25,10 @@
           path: ./
         source: build
 
-    - name: Start container, connect to network and link
+    - name: Start Docker Container
       community.docker.docker_container:
-        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
-        image: latest
-        networks:
-          - name: TestingNet
-            ipv4_address: "127.0.0.1:8080"
-            aliases:
-              - sleepyzz
-            links:
-              - db_test:db
-          - name: TestingNet2
+        name: "{{ docker_image_name }}_container"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        ports:
+          - "8080:80"
