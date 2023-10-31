@@ -2,13 +2,9 @@
 - name: Build, Push, and Run Python Docker Image
   hosts: localhost
   gather_facts: no
-<<<<<<< HEAD
-  become: no
-=======
   become: yes
   become_method: sudo
   become_user: root
->>>>>>> 66ac634 (WIP: Ansible error permissions fixed)
 
   vars:
     image_name: "georgiyanev/DevOps-Upskill-23"
