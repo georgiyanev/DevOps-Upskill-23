@@ -13,6 +13,11 @@
       ansible.builtin.git:
         repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
         dest: "{{ python_app_dir }}"
+        key_file: /home/gyanev/.ssh/id_rsa
+        accept_hostkey: yes
+        version: v2
+      environment:
+        GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
     - name: Build image and with build args
       community.docker.docker_image:
