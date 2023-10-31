@@ -9,19 +9,29 @@
     docker_image_tag: v.0.2
 
   tasks:
+    - name: Ensure Python Application Directory Exists
+      stat:
+        path: "{{ python_app_dir }}"
+        register: app_dir
+
+    - name: Fail if Python Application Directory Doesn't Exist
+      fail:
+        msg: "Python application directory {{ python_app_dir }} does not exist."
+      when: not app_dir.stat.exists
+
     - name: Build Docker Image
       command: >
         docker build -t {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }} {{ python_app_dir }}
       args:
         chdir: "{{ python_app_dir }}"
-      become: yes
+      become: true
 
     - name: Push Docker Image to Registry
       command: >
         docker push {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
-      become: yes
+      become: true
 
     - name: Run Docker Container
       command: >
         docker run -d --name {{ docker_image_name }} -p 8080:80 {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
-      become: yes
+      become: true
