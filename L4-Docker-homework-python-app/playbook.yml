@@ -18,7 +18,7 @@
       community.docker.docker_image:
         name: docker_image_name
         build:
-          path: /app/docker-image
+          path: /Dockerfile
           args:
             log_volume: /var/log/docker_image_name
             listen_port: 5001
