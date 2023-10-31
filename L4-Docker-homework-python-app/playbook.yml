@@ -12,12 +12,12 @@
     - name: Ensure Python Application Directory Exists
       stat:
         path: "{{ python_app_dir }}"
-        register: app_dir
+        register: python_app_dir
 
     - name: Fail if Python Application Directory Doesn't Exist
       fail:
         msg: "Python application directory {{ python_app_dir }} does not exist."
-      when: not app_dir.stat.exists
+      when: not Python_app_dir.stat.exists
 
     - name: Build Docker Image
       command: >
