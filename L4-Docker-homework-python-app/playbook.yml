@@ -1,48 +1,34 @@
 ---
-- name: Build, Push, and Run Python Docker Image
+- name: Checkout Git Repository and Build Docker Image
   hosts: localhost
-  gather_facts: no
-<<<<<<< HEAD
-  become: no
-=======
-  become: yes
-  become_method: sudo
-  become_user: root
->>>>>>> 66ac634 (WIP: Ansible error permissions fixed)
 
   vars:
-    image_name: "georgiyanev/DevOps-Upskill-23"
-    image_tag: "v0.1"
-    listen_port: "5001"
-    code_directory: "/code"
-    app_host: "0.0.0.0"
-
+    docker_registry: "gyanev84"
+    docker_image_name: "python-app"
+    docker_image_tag: "v.0.2"
+    python_app_dir: "/app"
+  
   tasks:
-    - name: Create code dir
-      file:
-        dest: "{{ code_directory }}"
-        state: directory
-
-    - name: Get latest app from GitHub
-      git:
-        repo: "git@github.com:{{ image_name }}"
-        version: main
-        dest: "{{ code_directory }}"
-        clone: yes
-        recursive: yes
-        force: yes
+    - name: Checkout Git Repository
+      ansible.builtin.git:
+        repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
+        dest: "{{ python_app_dir }}"
+        key_file: /home/gyanev/.ssh/id_rsa
         accept_hostkey: yes
-        key_file: "/home/gyanev/.ssh/id_rsa"
+      environment:
+        GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
-    - name: Install Python libs
-      pip:
-        chdir: "{{ code_directory }}"
-        requirements: "requirements.txt"
-        state: present
-        virtualenv_command: "pyenv"
+    - name: Build image and with build args
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        build:
+          path: ./
+        source: build
 
-    - name: Start the Flask app
-      shell: "flask run -h {{ app_host }} -p {{ listen_port: }}"
-      args:
-        chdir: "{{ code_directory }}/app"
-
+    - name: Start Docker Container
+      community.docker.docker_container:
+        name: "{{ docker_image_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        ports:
+          - "8080:80"
