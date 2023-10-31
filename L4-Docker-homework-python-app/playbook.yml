@@ -1,13 +1,6 @@
 ---
 - name: Checkout Git Repository and Build Docker Image
   hosts: localhost
-
-  vars:
-    docker_registry: "gyanev84"
-    docker_image_name: "python-app"
-    docker_image_tag: "v.0.2"
-    python_app_dir: "/app"
-
   tasks:
     - name: Clone Git Repository
       community.general.git:
@@ -27,3 +20,9 @@
         chdir: "{{ python_app_dir }}/docker-image"
       become: yes
       when: git_checkout_result.changed
+
+  vars:
+    docker_registry: "gyanev84"
+    docker_image_name: "python-app"
+    docker_image_tag: "v.0.2"
+    python_app_dir: "/app"
