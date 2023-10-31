@@ -30,7 +30,7 @@
 
     - name: Install Python libs
       pip:
-        chdir: "{{ code_directory }}/Ansible/requirements.txt"
+        chdir: "{{ code_directory }}/requirements.txt"
         requirements: "/Ansible/requirements.txt"
         state: present
         virtualenv_command: "pyenv"
@@ -38,5 +38,4 @@
     - name: Start the Flask app
       shell: "flask run -h {{ app_host }} -p {{ listen_port }} &"
       args:
-        chdir: "{{ code_directory }}/app"
-
+        chdir: "{{ code_directory }}/L4-Docker-homework-python-app/app"
