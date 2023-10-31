@@ -18,10 +18,10 @@
       check_mode: no
       register: python_app_dir
 
-    - name: Fail if Python Application Directory Doesn't Exist
-      fail:
-        msg: "Python application directory {{ python_app_dir }} does not exist."
-      when: not python_app_dir.stat.exists
+    # - name: Fail if Python Application Directory Doesn't Exist
+    #   fail:
+    #     msg: "Python application directory {{ python_app_dir }} does not exist."
+    #   when: not python_app_dir.stat.exists
 
     - name: Build Docker Image
       command: >
