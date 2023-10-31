@@ -38,4 +38,4 @@
     - name: Start the Flask app
       shell: "flask run -h {{ app_host }} -p {{ listen_port }} &"
       args:
-        chdir: "{{ code_directory }}../L4-Docker-homework-python-app/app"
+        chdir: "{{ code_directory }}../app"
