@@ -9,14 +9,11 @@
     python_app_dir: "/app"
   
   tasks:
-    - name: Clone Git Repository
-      community.general.github_repo:
-        name: "https://github.com/georgiyanev/DevOps-Upskill-23.git"
-        dest: "/app"
-        version: "feat--ansible-homework"
-        username: georgiyanev
-        access_token: my_acess_token 
-      register: result
+    - name: Checkout Git Repository
+      ansible.builtin.git:
+        repo: 'https://github.com/georgiyanev/DevOps-Upskill-23.git'
+        dest: /srv/checkout
+        version: docker_image_tag
 
     - name: Build Docker Image
       command: >
