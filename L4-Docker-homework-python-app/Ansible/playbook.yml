@@ -35,10 +35,8 @@
         state: present
         virtualenv_command: "pyenv"
 
-    - name: Change working directory to the parent directory of "{{ code_directory }}/app"
-      command: /bin/sh -c 'cd "{{ code_directory }}/app"/..'
-
     - name: Start the Flask app
       shell: "flask run -h {{ app_host }} -p {{ listen_port }} &"
       args:
-        chdir: "{{ code_directory }}/app"
+        chdir: "{{ code_directory }}/app/.."
+
