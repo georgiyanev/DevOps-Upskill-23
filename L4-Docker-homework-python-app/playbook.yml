@@ -9,22 +9,27 @@
     python_app_dir: "/app"
   
   tasks:
-    # - name: Checkout Git Repository
-    #   ansible.builtin.git:
-    #     repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
-    #     dest: python_app_dir
+    - name: Checkout Git Repository
+      ansible.builtin.git:
+        repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
+        dest: "{{ python_app_dir }}"
 
     - name: Build image and with build args
       community.docker.docker_image:
-        name: docker_image_name
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
         build:
           path: ./
         source: build
 
-    - name: Tag and push to local registry
-      community.docker.docker_image:
-        name: docker_image_name
-        repository: localhost:5000/docker_image_name
-        tag: docker_image_tag
-        push: true
-        source: local
+    - name: Start container, connect to network and link
+      community.docker.docker_container:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        image: latest
+        networks:
+          - name: TestingNet
+            ipv4_address: "127.0.0.1:8080"
+            aliases:
+              - sleepyzz
+            links:
+              - db_test:db
+          - name: TestingNet2
