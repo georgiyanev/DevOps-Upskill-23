@@ -1,6 +1,8 @@
 ---
 - name: Checkout Git Repository and Build Docker Image
   hosts: localhost
+  collections:
+    - community
   tasks:
     - name: Clone Git Repository
       community.general.git:
