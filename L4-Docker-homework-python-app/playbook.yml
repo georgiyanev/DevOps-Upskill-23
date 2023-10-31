@@ -16,18 +16,18 @@
 
     - name: Build image and with build args
       community.docker.docker_image:
-        name: {{ docker_image_name }}
+        name: docker_image_name
         build:
           path: /app/docker-image
           args:
-            log_volume: /var/log/{{ docker_image_name }}
+            log_volume: /var/log/docker_image_name
             listen_port: 8080
         source: build
 
     - name: Tag and push to local registry
       community.docker.docker_image:
-        name: {{ docker_image_name }}
-        repository: localhost:5000/{{ docker_image_name }}
-        tag: {{ docker_image_tag }}
+        name: docker_image_name
+        repository: localhost:5000/docker_image_name
+        tag: docker_image_tag
         push: true
         source: local
