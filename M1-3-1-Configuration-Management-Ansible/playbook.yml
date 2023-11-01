@@ -1,0 +1,34 @@
+---
+- name: Checkout Git Repository and Build Docker Image
+  hosts: localhost
+
+  vars:
+    docker_registry: "gyanev84"
+    docker_image_name: "python-app"
+    docker_image_tag: "v.0.2"
+    python_app_dir: "/app"
+  
+  tasks:
+    - name: Checkout Git Repository
+      ansible.builtin.git:
+        repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
+        dest: "/home/gyanev/Ansible-homework"
+        key_file: /home/gyanev/.ssh/id_rsa
+        accept_hostkey: yes
+      environment:
+        GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+    - name: Build image and with build args
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        build:
+          path: /home/gyanev/Ansible-homework/L4-Docker-homework-python-app/app
+        source: build
+
+    - name: Start Docker Container
+      community.docker.docker_container:
+        name: "{{ docker_image_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        ports:
+          - "8080:80"
