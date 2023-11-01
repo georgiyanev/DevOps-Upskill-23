@@ -12,7 +12,7 @@
     - name: Checkout Git Repository
       ansible.builtin.git:
         repo: git@github.com:georgiyanev/DevOps-Upskill-23.git
-        dest: "{{ python_app_dir }}"
+        dest: "/home/gyanev/Ansible-homework"
         key_file: /home/gyanev/.ssh/id_rsa
         accept_hostkey: yes
       environment:
@@ -22,7 +22,7 @@
       community.docker.docker_image:
         name: "{{ docker_image_name }}:{{ docker_image_tag }}"
         build:
-          path: ./
+          path: /home/gyanev/Ansible-homework/L4-Docker-homework-python-app/app
         source: build
 
     - name: Start Docker Container
