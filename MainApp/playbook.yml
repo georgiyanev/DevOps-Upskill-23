@@ -1,9 +1,10 @@
+---
 - name: Build Docker container and push it to DockerHub repository
   hosts: localhost
   gather_facts: no
 
   vars:
-    image_name: "gyanev84/ansible-homework"
+    image_name: "ansible-docker-image"
     image_tag: "v.0.2"
     ports_map: "5000:5000"
     build_dir: "/tmp/docker_build"
@@ -35,24 +36,25 @@
         - { src: "./app", dest: "" }
 
     - name: Build container image
-      ansible.builtin.docker_image:
+      community.docker.docker_image:
         name: "{{ image_name }}:{{ image_tag }}"
         source: build
         build:
-          path: "{{ build_dir }}"
+          path: "{{ build_dir }}/"
         state: present
 
     - name: Start the container based on that image
-      ansible.builtin.docker_container:
+      community.docker.docker_container:
         name: "{{ cnt_name }}"
         image: "{{ image_name }}:{{ image_tag }}"
         state: started
-        ports:
+        ports: 
           - "{{ ports_map }}"
 
     - name: Tag the compiled Docker image and push it to the DockerHub public repository
-      ansible.builtin.docker_image:
-        name: "{{ docker_repo }}"
+      community.docker.docker_image:
+        name: "{{ image_name }}"
         tag: "{{ image_tag }}"
-        push: yes
+        repository: "{{ docker_repo }}"
+        push: true
         source: local
