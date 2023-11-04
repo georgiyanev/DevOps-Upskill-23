@@ -9,8 +9,8 @@
     build_dir: "/tmp/docker_build"
     cnt_name: "devops-ansible"
     docker_repo: "gyanev84/ansible-homework"
-    file_owner: "gyanev"
-    file_group: "gyanev"
+    file_owner: "root"
+    file_group: "root"
     file_mode: "0777"
 
   tasks:
