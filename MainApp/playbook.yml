@@ -1,7 +1,7 @@
 ---
 - name: Build Docker container and push it to DockerHub repository
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
 
   vars:
     image_name: "ansible-docker-image"
