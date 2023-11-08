@@ -31,9 +31,9 @@
         group: "{{ file_group }}"
         mode: "{{ file_mode }}"
       with_items:
-        - { src: "./Dockerfile", dest: "Dockerfile" }
-        - { src: "./requirements.txt", dest: "requirements.txt" }
-        - { src: "./app", dest: "" }
+        - { src: "../Dockerfile", dest: "Dockerfile" }
+        - { src: "../requirements.txt", dest: "requirements.txt" }
+        - { src: "../app", dest: "" }
 
     - name: Build container image
       community.docker.docker_image:
