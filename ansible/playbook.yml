@@ -5,7 +5,7 @@
 
   vars:
     image_name: "ansible-docker-image"
-    image_tag: "v.0.2"
+    image_tag: "v.0.3"
     ports_map: "5000:5000"
     build_dir: "/tmp/docker_build"
     cnt_name: "devops-ansible"
