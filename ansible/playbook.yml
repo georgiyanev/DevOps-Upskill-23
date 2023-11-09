@@ -5,7 +5,7 @@
 
   vars:
     image_name: "ansible-docker-image"
-    image_tag: "v.0.2"
+    image_tag: "v.0.3"
     ports_map: "5000:5000"
     build_dir: "/tmp/docker_build"
     cnt_name: "devops-ansible"
@@ -35,6 +35,18 @@
         - { src: "../requirements.txt", dest: "requirements.txt" }
         - { src: "../app", dest: "" }
 
+    - name: Load DockerHub credentials from vault
+      include_vars:
+        file: dockerhub-credentials.yml
+        name: dockerhub_credentials
+
+    - name: Login to DockerHub using credentials from vault
+      community.docker.docker_login:
+        username: "{{ dockerhub_credentials.username }}"
+        password: "{{ dockerhub_credentials.password }}"
+      no_log: yes
+      register: docker_login_result
+
     - name: Build container image
       community.docker.docker_image:
         name: "{{ image_name }}:{{ image_tag }}"
@@ -58,3 +70,7 @@
         repository: "{{ docker_repo }}"
         push: true
         source: local
+
+    - name: Log-out from Dockerhub
+      community.docker.docker_login:
+        state: absent
