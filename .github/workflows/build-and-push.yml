@@ -78,12 +78,12 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
 
-      - name: Add CONTRIBUTORS guide
-        run: |
-          echo "Follow this guide" >> CONTRIBUTORS.md
-          git add CONTRIBUTORS.md
-          git commit -m "Add CONTRIBUTORS guide"
-          git push
+      # - name: Add CONTRIBUTORS guide
+      #   run: |
+      #     echo "Follow this guide" >> CONTRIBUTORS.md
+      #     git add CONTRIBUTORS.md
+      #     git commit -m "Add CONTRIBUTORS guide"
+      #     git push
 
   check_vulnerabilities:
     runs-on: ubuntu-latest
