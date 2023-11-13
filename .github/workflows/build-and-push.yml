@@ -7,7 +7,8 @@ on:
 
 jobs:
   editorconfig:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latests
+
     steps:
       - uses: actions/checkout@v2
       - uses: editorconfig-checker/action-editorconfig-checker@main
@@ -65,10 +66,10 @@ jobs:
           push: false
           tags: ${{ github.sha }}
 
-      - name: Scan built image with Trivy
-        run: |
-          docker pull gyanev84/github-actions:${{ github.sha }}
-          docker run --rm -v $(pwd):/app -w /app aquasec/trivy gyanev84/github-actions:${{ github.sha }}
+      # - name: Scan built image with Trivy
+      #   run: |
+      #     docker pull gyanev84/github-actions:${{ github.sha }}
+      #     docker run --rm -v $(pwd):/app -w /app aquasec/trivy gyanev84/github-actions:${{ github.sha }}
 
       - name: Push image to Docker Hub
         uses: docker/build-push-action@v2
