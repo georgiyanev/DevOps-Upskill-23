@@ -88,6 +88,10 @@ jobs:
   check_vulnerabilities:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
