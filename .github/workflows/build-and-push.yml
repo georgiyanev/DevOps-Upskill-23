@@ -32,7 +32,9 @@ jobs:
         #   black --check .
 
       - name: Check Markdown files
-        uses: markdownlint/check@v0.5.0
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_MARKDOWN: true
 
       - name: Code Unittest
         uses: actions/setup-python@v2
