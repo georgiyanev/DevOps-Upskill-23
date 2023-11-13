@@ -1,14 +1,97 @@
-name: EditorConfig Checker
+name: CI/CD Pipeline
 
 on:
-    push:
-        branches:
-            - M1-4-2-CI-Practice
+  push:
+    branches:
+      - "M1-4-2-CI-Practice"
 
 jobs:
-    editorconfig:
-        runs-on: ubuntu-20.04
-        steps:
-            - uses: actions/checkout@v2
-            - uses: editorconfig-checker/action-editorconfig-checker@main
-            - run: editorconfig-checker
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Check .editorconfig
+        uses: actions/checkout@v2
+        with:
+          repository: editorial-check/action
+          ref: main
+        env:
+          CONFIG_FILE: .editorconfig
+          # run: docker run -v $(pwd):/workdir editorial-check/action $CONFIG_FILE
+
+      - name: Code Lint and Style
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+        # run: |
+        #   pip install pylint black
+        #   pylint app.py
+        #   black --check .
+
+      - name: Check Markdown files
+        uses: markdownlint/check@v0.5.0
+
+      - name: Code Unittest
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+        # run: |
+        #   pip install -r requirements.txt
+        #   python -m unittest
+
+      - name: Check for hardcoded secrets
+        uses: zricethezav/gitleaks-action@v7
+        with:
+          args: --path .
+
+      # - name: SAST - SonarCloud
+      #   uses: sonarsource/sonarcloud-github-action@v1
+      #   with:
+      #     organization: "<your-organization>"
+      #     token: ${{ secrets.SONAR_TOKEN }}
+
+      # - name: SCA - Snyk
+      #   uses: snyk/actions/scan@v1
+      #   with:
+      #     token: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: ${{ github.sha }}
+
+      - name: Scan built image with Trivy
+        run: |
+          docker pull gyanev84/github-actions:${{ github.sha }}
+          docker run --rm -v $(pwd):/app -w /app aquasec/trivy gyanev84/github-actions:${{ github.sha }}
+
+      - name: Push image to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
+
+      - name: Add CONTRIBUTORS guide
+        run: |
+          echo "Follow this guide" >> CONTRIBUTORS.md
+          git add CONTRIBUTORS.md
+          git commit -m "Add CONTRIBUTORS guide"
+          git push
+
+  check_vulnerabilities:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Scan built image with Trivy
+        run: |
+          docker pull gyanev84/github-actions:${{ github.sha }}
+          docker run --rm -v $(pwd):/app -w /app aquasec/trivy --exit-code 1 gyanev84/github-actions:${{ github.sha }}
