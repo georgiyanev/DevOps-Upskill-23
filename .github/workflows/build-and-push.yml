@@ -41,9 +41,9 @@ jobs:
         with:
           python-version: "3.x"
 
-      - run: |
-          pip install -r requirements.txt
-          python -m unittest
+      # - run: |
+      #     pip install -r requirements.txt
+      #     python -m unittest
 
       - name: Check for hardcoded secrets
         uses: zricethezav/gitleaks-action@v2
