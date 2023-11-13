@@ -14,7 +14,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Check .editorconfig
-        uses: gh-code/editorconfig-checker-action@v1
+        uses: actions/checkout@v2
+        with:
+          repository: editorial-check/action
+          ref: M1-4-2-CI-Practice
+        # env:
+        #   CONFIG_FILE: .editorconfig
+        # run: docker run -v $(pwd):/workdir editorial-check/action $CONFIG_FILE
 
       - name: Code Lint and Style
         uses: actions/setup-python@v2
