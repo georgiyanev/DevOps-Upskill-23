@@ -28,7 +28,7 @@ jobs:
 
       - run: |
           pip install pylint black
-          pylint ../app/app.py
+          pylint app.py
           black --check .
 
       - name: Check Markdown files
