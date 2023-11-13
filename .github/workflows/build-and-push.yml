@@ -45,7 +45,7 @@ jobs:
           python -m unittest
 
       - name: Check for hardcoded secrets
-        uses: zricethezav/gitleaks-action
+        uses: zricethezav/gitleaks-action@v6
         with:
           args: --path .
 
