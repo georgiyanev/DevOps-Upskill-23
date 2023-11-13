@@ -101,7 +101,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # - name: Scan built image with Trivy
-      #   run: |
-      #     docker pull gyanev84/github-actions:${{ github.sha }}
-      #     docker run --rm -v $(pwd):/app -w /app aquasec/trivy --exit-code 1 gyanev84/github-actions:${{ github.sha }}
+      - name: Scan built image with Trivy
+        run: |
+          docker pull gyanev84/github-actions:${{ github.sha }}
+          docker run --rm -v $(pwd):/app -w /app aquasec/trivy --exit-code 1 gyanev84/github-actions:${{ github.sha }}
