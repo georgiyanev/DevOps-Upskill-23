@@ -68,11 +68,8 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      - name: Set up Environment Variables
-        run: echo "SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}" >> $GITHUB_ENV
-
       - name: Authenticate with Snyk
-        run: snyk auth
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       # Build a Docker image. Use Git commit SHA as an Image tag.
       - name: Build Docker image
