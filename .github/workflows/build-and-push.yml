@@ -58,12 +58,12 @@ jobs:
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.my-sonar-token}}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      # - name: SCA - Snyk
-      #   uses: snyk/actions/scan@v1
-      #   with:
-      #     token: ${{ secrets.SNYK_TOKEN }}
+      - name: SCA - Snyk
+        uses: snyk/actions/scan@v1
+        with:
+          token: ${{ secrets.SNYK_TOKEN }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v2
