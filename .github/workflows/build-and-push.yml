@@ -54,16 +54,22 @@ jobs:
           cd './app/'
           python -m unittest app_test.py
 
+      - name: Install dotenv-cli
+        run: npm install -g dotenv-cli
+
+      - name: Load Environment Variables
+        run: dotenv -e .env
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
 
       - name: SCA - Snyk
-        uses: snyk/actions/scan@v1
-        with:
-          token: ${{ secrets.SNYK_TOKEN }}
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v2
