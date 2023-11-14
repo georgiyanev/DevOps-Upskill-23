@@ -63,14 +63,7 @@ jobs:
       #   run: npm install -g dotenv-cli
 
       # - name: Load Environment Variables
-      #   run: dotenv -e ./.env
-
-      # SAST - SonarCloud; Review code smells and security issues
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+      #   run: dotenv -e .env
 
       # SCA - Snyk; review security issues
       - name: SCA - Snyk
@@ -109,6 +102,13 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # SAST - SonarCloud; Review code smells and security issues
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
 
       # (optional) Add CONTRIBUTORS guide
       # - name: Add CONTRIBUTORS guide
