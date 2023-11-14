@@ -17,6 +17,19 @@ jobs:
       - uses: editorconfig-checker/action-editorconfig-checker@main
       - run: editorconfig-checker
 
+  # SAST - SonarCloud; Review code smells and security issues
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -90,15 +103,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
-
-      # SAST - SonarCloud; Review code smells and security issues
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@
-        with:
-          fetch-depth: 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Scan the built image with Trivy
       - name: Scan built image with Trivy
