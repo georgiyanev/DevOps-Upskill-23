@@ -93,7 +93,7 @@ jobs:
 
       # SAST - SonarCloud; Review code smells and security issues
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@M1-4-2-CI-Practice
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
