@@ -62,8 +62,8 @@ jobs:
       # - name: Install dotenv-cli
       #   run: npm install -g dotenv-cli
 
-      - name: Load Environment Variables
-        run: dotenv -e ./.env
+      # - name: Load Environment Variables
+      #   run: dotenv -e ./.env
 
       # SAST - SonarCloud; Review code smells and security issues
       - name: SonarCloud Scan
