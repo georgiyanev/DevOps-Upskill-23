@@ -92,6 +92,13 @@ jobs:
           docker pull gyanev84/github-actions:${{ github.sha }}
           docker run --rm -v $(pwd):/app -w /app aquasec/trivy gyanev84/github-actions:${{ github.sha }}
 
+      - name: Load Docker Hub Credentials from Vault
+        run: |
+          DOCKERHUB_USERNAME=$(cat ./ansible/dockerhub-credentials | jq -r '.username')
+          DOCKERHUB_PASSWORD=$(cat ./ansible/dockerhub-credentials | jq -r '.password')
+          echo "DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME" >> $GITHUB_ENV
+          echo "DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD" >> $GITHUB_ENV
+
       # Push the built image to your Docker HUB accoun
       - name: Push image to Docker Hub
         uses: docker/build-push-action@v2
