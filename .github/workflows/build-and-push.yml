@@ -93,8 +93,11 @@ jobs:
 
       # SAST - SonarCloud; Review code smells and security issues
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@M1-4-2-CI-Practice
+        uses: sonarsource/sonarcloud-github-action@
+        with:
+          fetch-depth: 0
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Scan the built image with Trivy
