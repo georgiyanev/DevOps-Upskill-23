@@ -48,16 +48,16 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Execute unit-test
+        run: |
+          cd './app/'
+          python -m unittest app_test.py
+
       #Check for hardcoded secrets (gitleaks)
       - name: Check for hardcoded secrets
         uses: zricethezav/gitleaks-action@v2
         with:
           args: --path .
-
-      - name: Execute unit-test
-        run: |
-          cd './app/'
-          python -m unittest app_test.py
 
       # SCA - Snyk; review security issues
       - name: Install Node.js
@@ -95,8 +95,13 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Scan the built image with Trivy
+      - name: Scan built image with Trivy
+        run: |
+          docker pull gyanev84/github-actions:${{ github.sha }}
+          docker run --rm -v $(pwd):/app -w /app aquasec/trivy --exit-code 1 gyanev84/github-actions:${{ github.sha }}
 
       # (optional) Add CONTRIBUTORS guide
       # - name: Add CONTRIBUTORS guide
@@ -105,13 +110,3 @@ jobs:
       #     git add CONTRIBUTORS.md
       #     git commit -m "Add CONTRIBUTORS guide"
       #     git push
-
-  check_vulnerabilities:
-    # Scan the built image with Trivy
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Scan built image with Trivy
-        run: |
-          docker pull gyanev84/github-actions:${{ github.sha }}
-          docker run --rm -v $(pwd):/app -w /app aquasec/trivy --exit-code 1 gyanev84/github-actions:${{ github.sha }}
