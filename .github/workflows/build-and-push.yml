@@ -59,14 +59,6 @@ jobs:
           cd './app/'
           python -m unittest app_test.py
 
-      - name: Install dotenv-cli
-        run: pip install python-dotenv
-
-      - name: Load Environment Variables
-        run: |
-          python -m pip install python-dotenv
-          python -c "from dotenv import load_dotenv; load_dotenv()"
-
       # SCA - Snyk; review security issues
       - name: Install Node.js
         uses: actions/setup-node@v3
