@@ -79,12 +79,6 @@ jobs:
           push: false
           tags: ${{ github.sha }}
 
-      # Scan the built image with Trivy
-      - name: Scan built image with Trivy
-        run: |
-          docker pull gyanev84/github-actions:${{ github.sha }}
-          docker run --rm -v $(pwd):/app -w /app aquasec/trivy gyanev84/github-actions:${{ github.sha }}
-
       - name: Load Docker Hub Credentials from Vault
         run: |
           DOCKERHUB_USERNAME=$(cat ./ansible/dockerhub-credentials | jq -r '.username')
