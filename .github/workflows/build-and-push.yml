@@ -104,10 +104,17 @@ jobs:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Scan the built image with Trivy
-      - name: Scan built image with Trivy
-        run: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
-          docker run --rm -v $(pwd):/app -w /app aquasec/trivy ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
+          format: "sarif"
+          output: "trivy-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-results.sarif"
 
       # (optional) Add CONTRIBUTORS guide
       # - name: Add CONTRIBUTORS guide
