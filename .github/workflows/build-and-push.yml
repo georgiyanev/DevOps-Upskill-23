@@ -68,10 +68,16 @@ jobs:
           python -c "from dotenv import load_dotenv; load_dotenv()"
 
       # SCA - Snyk; review security issues
-      - name: SCA - Snyk
-        uses: snyk/actions/python-3.10@master
-        env:
-          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       # Build a Docker image. Use Git commit SHA as an Image tag.
       - name: Build Docker image
