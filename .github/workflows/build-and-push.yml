@@ -55,9 +55,9 @@ jobs:
           python -m unittest app_test.py
 
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@M1-4-2-CI-Practice
+        uses: sonarsource/sonarcloud-github-action@master
         env:
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.my-sonar-token}}
 
       # - name: SCA - Snyk
