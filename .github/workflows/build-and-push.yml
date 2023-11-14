@@ -106,8 +106,8 @@ jobs:
       # Scan the built image with Trivy
       - name: Scan built image with Trivy
         run: |
-          docker pull gyanev84/github-actions:${{ github.sha }}
-          docker run --rm -v $(pwd):/app -w /app aquasec/trivy github-actions:${{ github.sha }}
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:562eca1cf17e6c9910776699873c9a960d4675f5
+          docker run --rm -v $(pwd):/app -w /app aquasec/trivy ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:562eca1cf17e6c9910776699873c9a960d4675f5
 
       # (optional) Add CONTRIBUTORS guide
       # - name: Add CONTRIBUTORS guide
