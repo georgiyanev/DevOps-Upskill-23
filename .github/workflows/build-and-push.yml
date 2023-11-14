@@ -54,8 +54,8 @@ jobs:
           cd './app/'
           python -m unittest app_test.py
 
-      - name: Install dotenv-cli
-        run: npm install -g dotenv-cli
+      # - name: Install dotenv-cli
+      #   run: npm install -g dotenv-cli
 
       - name: Load Environment Variables
         run: dotenv -e .env
