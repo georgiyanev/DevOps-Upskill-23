@@ -71,31 +71,13 @@ jobs:
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-      # Build a Docker image. Use Git commit SHA as an Image tag.
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: false
-          tags: ${{ github.sha }}
-
-      - name: Load Docker Hub Credentials from Vault
-        run: |
-          DOCKERHUB_USERNAME=$(cat ./ansible/dockerhub-credentials | jq -r '.username')
-          DOCKERHUB_PASSWORD=$(cat ./ansible/dockerhub-credentials | jq -r '.password')
-          echo "DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME" >> $GITHUB_ENV
-          echo "DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD" >> $GITHUB_ENV
-
-      # Push the built image to your Docker HUB accoun
-      - name: Push image to Docker Hub
+      # Build and push Docker image. Use Git commit SHA as an Image tag.
+      - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
-        # env:
-        #   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        #   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # SAST - SonarCloud; Review code smells and security issues
       - name: SonarCloud Scan
