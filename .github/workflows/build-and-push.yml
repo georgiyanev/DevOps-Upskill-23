@@ -54,11 +54,11 @@ jobs:
           cd './app/'
           python -m unittest app_test.py
 
-      - name: SAST - SonarCloud
-        uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          organization: "georgiyanev"
-          token: ${{ secrets.my-sonar-token}}
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@M1-4-2-CI-Practice
+        env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.my-sonar-token}}
 
       # - name: SCA - Snyk
       #   uses: snyk/actions/scan@v1
