@@ -93,9 +93,9 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions:${{ github.sha }}
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        # env:
+        #   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        #   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # SAST - SonarCloud; Review code smells and security issues
       - name: SonarCloud Scan
