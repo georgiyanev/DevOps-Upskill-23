@@ -54,10 +54,10 @@ jobs:
           python -m unittest app_test.py
 
       #Check for hardcoded secrets (gitleaks)
-      # - name: Check for hardcoded secrets
-      #   uses: zricethezav/gitleaks-action@v2
-      #   with:
-      #     args: --path .
+      - name: Check for hardcoded secrets
+        uses: zricethezav/gitleaks-action@v2
+        with:
+          args: --path .
 
       # SCA - Snyk; review security issues
       - name: Install Node.js
@@ -97,11 +97,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # - name: SonarCloud Scan
+      #   uses: sonarsource/sonarcloud-github-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Scan the built image with Trivy
       - name: Run Trivy vulnerability scanner
