@@ -98,14 +98,3 @@ jobs:
           format: "sarif"
           output: "trivy-results.sarif"
       # Additional steps can be added for more scans or checks
-
-  # Optional Steps
-  # optional_steps:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Add CONTRIBUTORS guide
-  #       run: |
-  #         echo "Follow this guide" >> CONTRIBUTORS.md
-  #         git add CONTRIBUTORS.md
-  #         git commit -m "Add CONTRIBUTORS guide"
-  #         git push
