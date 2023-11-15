@@ -51,7 +51,7 @@ jobs:
       - name: Check for Hardcoded Secrets (gitleaks)
         uses: zricethezav/gitleaks-action@v2
         with:
-          args: --path .
+          fetch-depth: 0
 
   # Security Checks and Docker Image Build
   security_and_docker:
