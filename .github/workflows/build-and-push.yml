@@ -57,6 +57,8 @@ jobs:
   security_and_docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -85,6 +87,8 @@ jobs:
   static_analysis_and_security_scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
       - name: SonarCloud; Review code smells and security issues
         uses: actions/checkout@v3
         with:
