@@ -100,3 +100,12 @@ jobs:
           format: "sarif"
           output: "trivy-results.sarif"
       # Additional steps can be added for more scans or checks
+
+# Add contributorts to README file
+  add-contributors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: akhilmhdh/contributors-readme-action@v2.3.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

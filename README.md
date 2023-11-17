@@ -34,3 +34,5 @@ Welcome to the Upskill 23 DevOps repository, your gateway to innovation and deve
 ## Your Contribution
 
 Feel free to explore and collaborate with us on this exciting project. If you have questions or need guidance, our documentation is your guidebook. Alternatively, reach out to the project maintainers for assistance. We appreciate your interest and welcome you to our community of innovators and creators.
+
+For more details on our contribution process, please refer to the [CONTRIBUTING.md](https://github.com/georgiyanev/DevOps-Upskill-23/blob/main/CONTRIBUTING.md) file.
