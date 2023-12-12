@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: my-app-container
-          image: gyanev84/github-actions:0e597cca9e5ffcde983d5eb1b8d70488acdf7bfe
+          image: gyanev84/github-actions:0b144058e145e6a349062f1f420cf625878be1df
           ports:
             - containerPort: 80
