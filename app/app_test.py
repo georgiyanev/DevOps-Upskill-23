@@ -10,7 +10,7 @@ class TestApp(unittest.TestCase):
     def test_hello_world(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b"Hello, World!")
+        self.assertEqual(response.data, b"Hello, Kubernetes!")
 
 
 if __name__ == "__main__":
