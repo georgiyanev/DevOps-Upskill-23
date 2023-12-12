@@ -30,7 +30,7 @@ Welcome to the Upskill 23 DevOps repository, your gateway to innovation and deve
 
 - **requirements.txt**
   - The 'requirements.txt' file is your recipe book for culinary success. It lists the Python packages and their versions required to concoct the project. Use it to install the necessary project dependencies.
- 
+
 - **kubernetes/**
   - **deployment.yml**: This file orchestrates the deployment of our application, ensuring that the desired number of containers is always running.
   - **service.yml**: The 'service.yml' file defines how network traffic is routed to our application within the Kubernetes cluster, allowing it to be accessible from the outside world.
