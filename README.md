@@ -31,6 +31,12 @@ Welcome to the Upskill 23 DevOps repository, your gateway to innovation and deve
 - **requirements.txt**
   - The 'requirements.txt' file is your recipe book for culinary success. It lists the Python packages and their versions required to concoct the project. Use it to install the necessary project dependencies.
 
+- **kubernetes/**
+  - **deployment.yml**: This file orchestrates the deployment of our application, ensuring that the desired number of containers is always running.
+  - **service.yml**: The 'service.yml' file defines how network traffic is routed to our application within the Kubernetes cluster, allowing it to be accessible from the outside world.
+  - **configMap.yml**: In 'configmap.yml', we centralize the configuration data for our application, making it easier to manage and update settings.
+  - **secrets.yml**: 'secrets.yml' securely stores sensitive information, such as API keys or database passwords, ensuring they remain confidential.
+
 ## Your Contribution
 
 Feel free to explore and collaborate with us on this exciting project. If you have questions or need guidance, our documentation is your guidebook. Alternatively, reach out to the project maintainers for assistance. We appreciate your interest and welcome you to our community of innovators and creators.
