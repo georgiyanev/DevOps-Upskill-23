@@ -84,10 +84,29 @@ echo "Waiting for Pods to be ready..."
 kubectl wait --for=condition=ready pod -l app=my-app --timeout=300s
 
 # Get the Pod name dynamically
-pod_name=$(kubectl get pods -l app=my-app -o jsonpath='{.items[0].metadata.name}')
+desired_label="app=my-app"
+pod_name=""
+timeout_seconds=300
+start_time=$(date +%s)
 
-# Display Pod information
-echo "Pod Name: $pod_name"
+while [ -z "$pod_name" ]; do
+  current_time=$(date +%s)
+  elapsed_time=$((current_time - start_time))
+
+  if [ "$elapsed_time" -ge "$timeout_seconds" ]; then
+      echo "Timeout: Pod with label $desired_label did not become available within $timeout_seconds seconds."
+      exit 1
+  fi
+
+  pod_name=$(kubectl get pods -l "$desired_label" -o jsonpath='{.items[0].metadata.name}')
+
+  if [ -z "$pod_name" ]; then
+      echo "Waiting for a pod with label $desired_label to become available..."
+      sleep 5
+  fi
+done
+
+echo "Found a pod with label $desired_label. Pod name is $pod_name."
 
 # Port-forward to the Pod
 echo "Port-forwarding to the Pod..."
