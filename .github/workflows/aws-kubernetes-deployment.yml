@@ -15,4 +15,4 @@ jobs:
 
     - name: SSH into EC2 and run script
       run: |
-        ssh -i /home/ubuntu/.ssh ubuntu@ip-172-31-30-104 'bash -s' < /var/www/html/DevOps-Upskill-23/kubernetes/update-deployment.sh
+        ssh -i ~/.ssh/id_rsa ubuntu@18.159.112.207 'bash -s' < /var/www/html/DevOps-Upskill-23/kubernetes/update-deployment.sh
