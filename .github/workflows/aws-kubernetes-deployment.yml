@@ -1,4 +1,4 @@
-name: AWS instance rebuid
+name: Deploy to EC2
 
 on:
   push:
@@ -6,14 +6,14 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Run Bash Script
-        run: |
-          chmod +x kubernetes/update-deployment.sh
-          ./kubernetes/update-deployment.sh
+    - name: SSH into EC2 and run script
+      run: |
+        ssh -i /home/ubuntu/.ssh ubuntu@ip-172-31-30-104 'bash -s' < /home/ubuntu/DevOps-Upskill-23/kubernetes/update-deployment.sh
+
