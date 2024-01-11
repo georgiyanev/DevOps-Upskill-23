@@ -9,7 +9,31 @@ TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq 
 
 echo "Latest Docker image tag: $TAG"
 
-sudo bash -c "cat <<EOF > deployment/deployment.yaml
+cat <<EOF > deployment/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: $IMAGE_NAME
+          image: $REPO:$TAG
+          ports:
+            - containerPort: 80
+EOF
+
+# Check if the script is running on a Linux system
+if [[ "$(uname)" == "Linux" ]]; then
+  sudo bash -c "cat <<EOF > deployment/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,7 +54,9 @@ spec:
           ports:
             - containerPort: 80
 EOF"
-
+else
+  echo "This script can only be run on a Linux system."
+fi
 
 # Check if kubectl is installed
 if ! [ -x "$(command -v kubectl)" ]; then
