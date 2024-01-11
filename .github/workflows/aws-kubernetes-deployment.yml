@@ -1,0 +1,22 @@
+name: AWS instance rebuid
+
+on:
+  push:
+    branches:
+      - main
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types:
+      - completed
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Run Bash Script
+        run: |
+          chmod +x kubernetes/update-deployment.sh
+          ./kubernetes/update-deployment.sh

@@ -9,7 +9,7 @@ TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq 
 
 echo "Latest Docker image tag: $TAG"
 
-cat <<EOF > deployment/deployment.yaml
+sudo bash -c "cat <<EOF > deployment/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,7 +29,7 @@ spec:
           image: $REPO:$TAG
           ports:
             - containerPort: 80
-EOF
+EOF"
 
 
 # Check if kubectl is installed
