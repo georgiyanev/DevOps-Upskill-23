@@ -125,4 +125,4 @@ echo "Latest Docker image tag: $TAG"
 # minikube stop
 
 echo "Script execution completed."
-exit 1
+exit
