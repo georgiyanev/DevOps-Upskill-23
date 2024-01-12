@@ -20,5 +20,5 @@ jobs:
 
       - name: SSH into EC2 and run script
         run: |
-          echo ${{ secrets.SSH_PRIVATE_KEY }}  | ssh -i /dev/stdin ubuntu@18.159.112.207 "hostname"
+          echo ${{ secrets.SSH_PRIVATE_KEY }}  | ssh -i /dev/stdin ubuntu@18.159.112.207 "/usr/sbin/hostname"
           
