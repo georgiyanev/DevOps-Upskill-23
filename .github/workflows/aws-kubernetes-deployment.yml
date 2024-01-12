@@ -28,8 +28,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo apt-get -y update &&
-            cd/ &&
-            cd /var/www/html/DevOps-Upskill-23/kubernetes/update-deployment.sh &&
-            sudo git pull origin main &&
+            sudo apt-get -y update && \
+            cd /var/www/html/DevOps-Upskill-23/kubernetes/ && \
+            sudo git pull origin main && \
+            sudo chmod +x update-deployment.sh && \
             ./update-deployment.sh
+
