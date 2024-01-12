@@ -29,6 +29,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo apt-get -y update &&
+            cd/ &&
             cd /var/www/html/DevOps-Upskill-23/kubernetes/update-deployment.sh &&
-            git pull origin main &&
+            sudo git pull origin main &&
             ./update-deployment.sh
