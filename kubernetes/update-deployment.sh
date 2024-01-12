@@ -124,5 +124,4 @@ echo "Latest Docker image tag: $TAG"
 # Uncomment the following line if you want to stop Minikube when you're done
 # minikube stop
 
-echo "Script execution completed. Press Enter to exit."
-read  # Wait for user input (Enter key) before exiting
+echo "Script execution completed."
