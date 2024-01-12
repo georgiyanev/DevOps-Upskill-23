@@ -1,23 +1,26 @@
-name: Deploy to EC2
+name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  deploy:
+  Deploy:
+    name: Deploy to EC2
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2 
+      - name: Build & Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: SSH into EC2 and run script
         run: |
-          bash -xv echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh.key && chmod 600 ~/.ssh.key && ssh -i ~/.ssh.key ubuntu@18.159.112.207 "/usr/sbin/hostname"
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@18.159.112.207 '
+
+              cd / &&
+              git checkout dev &&
+              cd var/www/html/DevOps-Upskill-23/kubernetes/ &&
+              . update-deployment.sh
+              '
