@@ -20,6 +20,4 @@ jobs:
 
       - name: SSH into EC2 and run script
         run: |
-          cd /
-          sudo chmod -R +x /var/www/html/DevOps-Upskill-23/kubernetes
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@18.159.112.207 "cd /var/www/html/DevOps-Upskill-23/kubernetes/ && . update-deployment.sh"
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@18.159.112.207 "cd / ; sudo chmod -R +x /var/www/html/DevOps-Upskill-23/kubernetes ; cd /var/www/html/DevOps-Upskill-23/kubernetes/ ; ./update-deployment.sh"
