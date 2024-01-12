@@ -1,22 +1,37 @@
-name: AWS instance rebuid
+name: Push-to-EC2
 
 on:
   push:
     branches:
       - main
-  workflow_run:
-    workflows: ["CI/CD Pipeline"]
-    types:
-      - completed
+
 jobs:
-  build:
+  deploy:
+    name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
+      - name: Checkout the files
         uses: actions/checkout@v2
 
-      - name: Run Bash Script
-        run: |
-          chmod +x kubernetes/update-deployment.sh
-          ./kubernetes/update-deployment.sh
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: 18.159.112.207
+          REMOTE_USER: ubuntu
+
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 18.159.112.207
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo apt-get -y update && \
+            cd /var/www/html/DevOps-Upskill-23/kubernetes/ && \
+            sudo git reset --hard &&
+            sudo git pull origin main && \
+            sudo chmod +x update-deployment.sh && \
+            ./update-deployment.sh
+
