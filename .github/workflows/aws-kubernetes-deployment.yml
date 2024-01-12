@@ -18,13 +18,13 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: 18.159.112.207
+          REMOTE_HOST: 3.125.3.217
           REMOTE_USER: ubuntu
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
-          host: 18.159.112.207
+          host: 3.125.3.217
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
