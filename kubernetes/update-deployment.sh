@@ -1,5 +1,5 @@
 # Create the "kubernetes" folder if it doesn't exist
-mkdir -p deployment
+sudo mkdir -p deployment
 
 # Generate Kubernetes Deployment YAML with the retrieved tag in the "kubernetes" folder
 REPO="gyanev84/github-actions"
