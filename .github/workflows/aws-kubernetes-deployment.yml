@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Push-to-EC2
 
 on:
   push:
@@ -7,12 +7,31 @@ on:
 
 jobs:
   deploy:
+    name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout the files
+        uses: actions/checkout@v2
 
-    - name: SSH into EC2 and run script
-      run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@18.159.112.207 'bash -s' < /var/www/html/DevOps-Upskill-23/kubernetes/update-deployment.sh
+      - name: Connect to AWS EC2 instance
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: 3.125.3.217
+          REMOTE_USER: ubuntu
+
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 3.125.3.217
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo apt-get -y update && \
+            cd /var/www/html/DevOps-Upskill-23/kubernetes/ && \
+            sudo git reset --hard &&
+            sudo git pull origin main && \
+            sudo chmod +x update-deployment.sh && \
+            ./update-deployment.sh
+

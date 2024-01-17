@@ -1,5 +1,5 @@
 # Create the "kubernetes" folder if it doesn't exist
-mkdir -p deployment
+sudo mkdir -p deployment
 
 # Generate Kubernetes Deployment YAML with the retrieved tag in the "kubernetes" folder
 REPO="gyanev84/github-actions"
@@ -124,5 +124,5 @@ echo "Latest Docker image tag: $TAG"
 # Uncomment the following line if you want to stop Minikube when you're done
 # minikube stop
 
-echo "Script execution completed. Press Enter to exit."
-read  # Wait for user input (Enter key) before exiting
+echo "Script execution completed."
+exit 0
