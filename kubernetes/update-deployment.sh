@@ -4,7 +4,6 @@ sudo mkdir -p deployment
 # Generate Kubernetes Deployment YAML with the retrieved tag in the "kubernetes" folder
 REPO="gyanev84/github-actions"
 IMAGE_NAME="my-app-container"
-
 TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq -r '.results[0].name')
 
 echo "Latest Docker image tag: $TAG"
@@ -90,11 +89,5 @@ echo "Found a pod with label $desired_label. Pod name is $pod_name."
 # Port-forward to the Pod
 echo "Port-forwarding to the Pod..."
 kubectl port-forward "pod/$pod_name" 8080:80 &
-
-# Retrieve the latest Docker image tag dynamically
-REPO="gyanev84/github-actions"
-IMAGE_NAME="my-app-container"
-TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq -r '.results[0].name')
-echo "Latest Docker image tag: $TAG"
 
 exit 0
