@@ -9,7 +9,7 @@ TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq 
 
 echo "Latest Docker image tag: $TAG"
 
-cat <<EOF > deployment/deployment.yaml
+deploy_yaml_content=$(cat <<EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,32 +30,11 @@ spec:
           ports:
             - containerPort: 80
 EOF
-
-# Check if the script is running on a Linux system
+)
 if [[ "$(uname)" == "Linux" ]]; then
-  sudo bash -c "cat <<EOF > deployment/deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-app
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-        - name: $IMAGE_NAME
-          image: $REPO:$TAG
-          ports:
-            - containerPort: 80
-EOF"
+  echo "$deploy_yaml_content" | sudo tee deployment/deployment.yaml > /dev/null
 else
-  echo "This script can only be run on a Linux system."
+  echo "$deploy_yaml_content" > deployment/deployment.yaml
 fi
 
 # Check if kubectl is installed
@@ -118,11 +97,4 @@ IMAGE_NAME="my-app-container"
 TAG=$(curl -s "https://registry.hub.docker.com/v2/repositories/$REPO/tags" | jq -r '.results[0].name')
 echo "Latest Docker image tag: $TAG"
 
-# Perform other Kubernetes-related tasks as needed
-
-# Cleanup (stop Minikube)
-# Uncomment the following line if you want to stop Minikube when you're done
-# minikube stop
-
-echo "Script execution completed."
 exit 0
