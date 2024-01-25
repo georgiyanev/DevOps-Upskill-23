@@ -5,7 +5,9 @@ on:
     workflows: ["CI/CD Pipeline"]
     types:
       - completed
-
+  push:
+    branches:
+      - main
 jobs:
   deploy:
     name: Deploy to EC2 on master branch push
