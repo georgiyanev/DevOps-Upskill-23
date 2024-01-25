@@ -1,9 +1,6 @@
 name: Push-to-EC2
 
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["CI/CD Pipeline"]
     types:
