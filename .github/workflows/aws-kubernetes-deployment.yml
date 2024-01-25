@@ -32,5 +32,5 @@ jobs:
             cd /var/www/html/DevOps-Upskill-23/kubernetes/ && \
             sudo git reset --hard && \
             sudo git pull origin main && \
-            sudo chmod +x update-deployment.sh && \
+            sudo chmod +x update-deployment-aws.sh && \
             ./update-deployment-aws.sh
