@@ -35,3 +35,7 @@ if [[ "$(uname)" == "Linux" ]]; then
 else
   echo "$deploy_yaml_content" > deployment/deployment.yaml
 fi
+
+kubectl apply -f deployment/deployment.yaml
+
+exit 0
