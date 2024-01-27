@@ -91,7 +91,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker image
-        if: env.changes == 'true'
+        if: needs.security_and_docker.outputs.changes == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
