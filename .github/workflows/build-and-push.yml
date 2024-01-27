@@ -57,8 +57,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       id: check_changes
-      values:
-        changes: ${{ steps.check_changes.outputs.changes }}
 
     steps:
       - name: Checkout Repository
