@@ -55,6 +55,11 @@ jobs:
   # Security Checks and Docker Image Build
   security_and_docker:
     runs-on: ubuntu-latest
+    outputs:
+      id: check_changes
+      values:
+        changes: ${{ steps.check_changes.outputs.changes }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -95,6 +100,7 @@ jobs:
   static_analysis_and_security_scan:
     runs-on: ubuntu-latest
     needs: security_and_docker
+    if: success() && needs.security_and_docker.outputs['build-result'] == 'success'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
