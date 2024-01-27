@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - "app/**"
+      - "requirements.txt"
+      - ".github/workflows/**"
+      - "Dockerfile"
+      - ansible/**.yml
 
 jobs:
   # Editorconfig Check
