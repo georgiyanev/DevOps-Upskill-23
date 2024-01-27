@@ -10,6 +10,6 @@ class TestApp(unittest.TestCase):
     def test_hello_world(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b"Test deploy - Github actions!")
+        self.assertEqual(response.data, b"Test deploy - App folder!")
 if __name__ == "__main__":
     unittest.main()
