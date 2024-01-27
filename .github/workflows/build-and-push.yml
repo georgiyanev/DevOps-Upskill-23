@@ -59,20 +59,24 @@ jobs:
     outputs:
       id: check_changes
       name: Check Changes
-      set-env:
-      changes: ${{ steps.check_changes.outputs.changes }}
+    env:
+      changes: ${{ needs.security_and_docker.outputs.check_changes }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.0
+          node-version: 14
+
       - name: Install Snyk CLI
         run: npm install -g snyk
+
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
       - name: Check for changes in "app" folder
         id: check_changes
         run: |
@@ -81,15 +85,19 @@ jobs:
           else
             echo "changes=false" >> $GITHUB_ENV
           fi
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build and push Docker image
         if: needs.security_and_docker.outputs.changes == 'true'
         uses: docker/build-push-action@v5
