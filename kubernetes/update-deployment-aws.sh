@@ -60,6 +60,5 @@ while [ -z "$pod_name" ]; do
 done
 
 kubectl apply -f deployment/deployment.yaml
-kubectl port-forward "pod/$pod_name" 8080:80 &
 
 exit 0
