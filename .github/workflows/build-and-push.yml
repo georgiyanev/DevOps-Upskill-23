@@ -72,7 +72,7 @@ jobs:
       - name: Check for changes in "app" folder
         id: check_changes
         run: |
-          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^app/')" ]; then
+          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'app/')" ]; then
             echo "::set-output name=changes::true"
           else
             echo "::set-output name=changes::false"
