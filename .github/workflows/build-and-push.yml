@@ -55,8 +55,6 @@ jobs:
   # Security Checks and Docker Image Build
   security_and_docker:
     runs-on: ubuntu-latest
-    outputs:
-      id: check_changes
 
     steps:
       - name: Checkout Repository
