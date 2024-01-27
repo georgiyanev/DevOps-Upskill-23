@@ -66,6 +66,14 @@ jobs:
         run: npm install -g snyk
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      - name: Check for changes in "app" folder
+        id: check_changes
+        run: |
+          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^app/')" ]; then
+            echo "::set-output name=changes::true"
+          else
+            echo "::set-output name=changes::false"
+          fi
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -76,6 +84,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker image
+        if: steps.check_changes.outputs.changes == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -101,7 +110,7 @@ jobs:
           output: "trivy-results.sarif"
       # Additional steps can be added for more scans or checks
 
-# Add contributorts to README file
+  # Add contributorts to README file
   add-contributors:
     runs-on: ubuntu-latest
     steps:
