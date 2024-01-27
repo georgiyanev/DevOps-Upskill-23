@@ -31,4 +31,5 @@ Follow these steps to execute the Bash script and update your Kubernetes Deploym
    Run the following command to make the Bash script executable:
 
    ```bash
-   chmod +x update-deployment.sh
+   chmod +x update-deployment-locally.sh && \ 
+   . update-deployment-locally.sh

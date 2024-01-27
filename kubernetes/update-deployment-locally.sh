@@ -49,10 +49,6 @@ if [ "$minikube_status" != "minikube: Running" ]; then
   minikube start
 fi
 
-# Delete all pods in the "default" namespace
-echo "Deleting all pods in the default namespace..."
-kubectl delete pods --all -n default
-
 # Apply Deployment YAML
 echo "Applying Deployment YAML..."
 kubectl apply -f deployment/deployment.yaml
