@@ -61,7 +61,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.0
+          node-version: "20"
       - name: Install Snyk CLI
         run: npm install -g snyk
       - name: Authenticate with Snyk
