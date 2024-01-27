@@ -7,6 +7,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "Test deploy - Trivy!!!!"
+    return "Test deploy - Github actions!"
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 80))
