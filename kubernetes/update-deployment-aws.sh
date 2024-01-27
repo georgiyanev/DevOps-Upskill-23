@@ -36,29 +36,6 @@ else
   echo "$deploy_yaml_content" > deployment/deployment.yaml
 fi
 
-# Get the Pod name dynamically
-desired_label="app=my-app"
-pod_name=""
-timeout_seconds=300
-start_time=$(date +%s)
-
-while [ -z "$pod_name" ]; do
-  current_time=$(date +%s)
-  elapsed_time=$((current_time - start_time))
-
-  if [ "$elapsed_time" -ge "$timeout_seconds" ]; then
-      echo "Timeout: Pod with label $desired_label did not become available within $timeout_seconds seconds."
-      exit 1
-  fi
-
-  pod_name=$(kubectl get pods -l "$desired_label" -o jsonpath='{.items[0].metadata.name}')
-
-  if [ -z "$pod_name" ]; then
-      echo "Waiting for a pod with label $desired_label to become available..."
-      sleep 5
-  fi
-done
-
 kubectl apply -f deployment/deployment.yaml
 
 exit 0
