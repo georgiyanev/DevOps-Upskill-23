@@ -1,6 +1,9 @@
 name: CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    paths:
+      - "app/**"
 
 jobs:
   # Editorconfig Check
