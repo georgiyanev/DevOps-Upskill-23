@@ -56,6 +56,12 @@ jobs:
   security_and_docker:
     runs-on: ubuntu-latest
 
+    outputs:
+      id: check_changes
+      name: Check Changes
+      set-env:
+      changes: ${{ steps.check_changes.outputs.changes }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -70,10 +76,10 @@ jobs:
       - name: Check for changes in "app" folder
         id: check_changes
         run: |
-          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'app/')" ]; then
-            echo "::set-output name=changes::true"
+          if [ -n "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- '/app/')" ]; then
+            echo "changes=true" >> $GITHUB_ENV
           else
-            echo "::set-output name=changes::false"
+            echo "changes=false" >> $GITHUB_ENV
           fi
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -85,7 +91,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker image
-        if: steps.check_changes.outputs.changes == 'true'
+        if: env.changes == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
