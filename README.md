@@ -46,9 +46,43 @@ For more details on our contribution process, please refer to the [CONTRIBUTING.
 ## Collaborators
 
 <!-- readme: collaborators -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/georgiyanev">
+            <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
+            <br />
+            <sub><b>Georgi Yanev</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/vutoff">
+            <img src="https://avatars.githubusercontent.com/u/16099556?v=4" width="100;" alt="vutoff"/>
+            <br />
+            <sub><b>Iliyan Vutoff</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/severel">
+            <img src="https://avatars.githubusercontent.com/u/29757147?v=4" width="100;" alt="severel"/>
+            <br />
+            <sub><b>Daniel Rankov</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: collaborators -end -->
 
 ## Contributors
 
 <!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/georgiyanev">
+            <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
+            <br />
+            <sub><b>Georgi Yanev</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
