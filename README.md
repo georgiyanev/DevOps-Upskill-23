@@ -42,3 +42,47 @@ Welcome to the Upskill 23 DevOps repository, your gateway to innovation and deve
 Feel free to explore and collaborate with us on this exciting project. If you have questions or need guidance, our documentation is your guidebook. Alternatively, reach out to the project maintainers for assistance. We appreciate your interest and welcome you to our community of innovators and creators.
 
 For more details on our contribution process, please refer to the [CONTRIBUTING.md](https://github.com/georgiyanev/DevOps-Upskill-23/blob/main/CONTRIBUTING.md) file.
+
+## Collaborators
+
+<!-- readme: collaborators -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/georgiyanev">
+            <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/vutoff">
+            <img src="https://avatars.githubusercontent.com/u/16099556?v=4" width="100;" alt="vutoff"/>
+            <br />
+            <sub><b>Iliyan Vutoff</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/severel">
+            <img src="https://avatars.githubusercontent.com/u/29757147?v=4" width="100;" alt="severel"/>
+            <br />
+            <sub><b>Daniel Rankov</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: collaborators -end -->
+
+## Contributors
+
+<!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/georgiyanev">
+            <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: contributors -end -->
