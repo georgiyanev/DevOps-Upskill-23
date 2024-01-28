@@ -2,12 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    paths:
-      - "app/**"
-      - "requirements.txt"
-      - ".github/workflows/**"
-      - "Dockerfile"
-      - ansible/**.yml
+    paths-ignore:
+      - kubernetes/**
+      - ansible/**
 
 jobs:
   # Editorconfig Check
