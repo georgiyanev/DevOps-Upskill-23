@@ -10,6 +10,6 @@ class TestApp(unittest.TestCase):
     def test_hello_world(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b"Test deploy - 28.01/v.0.1!")
+        self.assertEqual(response.data, b"Test deploy - 28.01/v.0.2!")
 if __name__ == "__main__":
     unittest.main()
