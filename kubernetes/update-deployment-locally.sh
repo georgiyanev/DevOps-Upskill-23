@@ -84,4 +84,6 @@ echo "Found a pod with label $desired_label. Pod name is $pod_name."
 
 # Port-forward to the Pod
 echo "Port-forwarding to the Pod..."
-kubectl port-forward "pod/$pod_name" 8080:80
+kubectl port-forward "pod/$pod_name" 8080:80 &
+
+exit 0
