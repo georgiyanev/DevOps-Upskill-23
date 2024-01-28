@@ -52,7 +52,7 @@ For more details on our contribution process, please refer to the [CONTRIBUTING.
         <a href="https://github.com/georgiyanev">
             <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
             <br />
-            <sub><b>Null</b></sub>
+            <sub><b>Georgi Yanev</b></sub>
         </a>
     </td>
     <td align="center">
@@ -81,7 +81,7 @@ For more details on our contribution process, please refer to the [CONTRIBUTING.
         <a href="https://github.com/georgiyanev">
             <img src="https://avatars.githubusercontent.com/u/7998627?v=4" width="100;" alt="georgiyanev"/>
             <br />
-            <sub><b>Null</b></sub>
+            <sub><b>Georgi Yanev</b></sub>
         </a>
     </td></tr>
 </table>
