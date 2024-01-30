@@ -7,6 +7,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "Test deploy - 28.01/v.1.0 LTS!"
+    return "Final Academy Project version 1.0!"
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 80))
