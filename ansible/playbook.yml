@@ -1,0 +1,76 @@
+---
+- name: Build Docker container and push it to DockerHub repository
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    image_name: "ansible-docker-image"
+    image_tag: "v.0.3"
+    ports_map: "5000:5000"
+    build_dir: "/tmp/docker_build"
+    cnt_name: "devops-ansible"
+    docker_repo: "gyanev84/ansible-homework"
+    file_owner: "gyanev"
+    file_group: "gyanev"
+    file_mode: "0777"
+
+  tasks:
+    - name: Create build directory for the Docker image
+      ansible.builtin.file:
+        path: "{{ build_dir }}"
+        state: directory
+        owner: "{{ file_owner }}"
+        group: "{{ file_group }}"
+        mode: "{{ file_mode }}"
+
+    - name: Copy files to build directory
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ build_dir }}/{{ item.dest }}"
+        owner: "{{ file_owner }}"
+        group: "{{ file_group }}"
+        mode: "{{ file_mode }}"
+      with_items:
+        - { src: "../Dockerfile", dest: "Dockerfile" }
+        - { src: "../requirements.txt", dest: "requirements.txt" }
+        - { src: "../app", dest: "" }
+
+    - name: Load DockerHub credentials from vault
+      include_vars:
+        file: dockerhub-credentials.yml
+        name: dockerhub_credentials
+
+    - name: Login to DockerHub using credentials from vault
+      community.docker.docker_login:
+        username: "{{ dockerhub_credentials.username }}"
+        password: "{{ dockerhub_credentials.password }}"
+      no_log: yes
+      register: docker_login_result
+
+    - name: Build container image
+      community.docker.docker_image:
+        name: "{{ image_name }}:{{ image_tag }}"
+        source: build
+        build:
+          path: "{{ build_dir }}/"
+        state: present
+
+    - name: Start the container based on that image
+      community.docker.docker_container:
+        name: "{{ cnt_name }}"
+        image: "{{ image_name }}:{{ image_tag }}"
+        state: started
+        ports: 
+          - "{{ ports_map }}"
+
+    - name: Tag the compiled Docker image and push it to the DockerHub public repository
+      community.docker.docker_image:
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        repository: "{{ docker_repo }}"
+        push: true
+        source: local
+
+    - name: Log-out from Dockerhub
+      community.docker.docker_login:
+        state: absent
